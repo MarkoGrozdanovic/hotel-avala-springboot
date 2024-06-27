@@ -1,6 +1,7 @@
 package com.dailycodework.hotelavala.service;
 
 import com.dailycodework.hotelavala.exception.InvalidBookingRequestException;
+import com.dailycodework.hotelavala.exception.ResourceNotFoundException;
 import com.dailycodework.hotelavala.model.BookedRoom;
 import com.dailycodework.hotelavala.model.Room;
 import com.dailycodework.hotelavala.repository.BookingRepository;
@@ -28,7 +29,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public BookedRoom findBookingByConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByBookingConfirmationCode(confirmationCode);
+        return bookingRepository.findByBookingConfirmationCode(confirmationCode).orElseThrow(() -> new ResourceNotFoundException("No booking found with booking code : "+confirmationCode));
     }
 
     @Override
